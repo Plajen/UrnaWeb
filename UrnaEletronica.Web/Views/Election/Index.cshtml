@@ -1,0 +1,49 @@
+﻿@using System.Globalization;
+@using UrnaEletronica.Application.ViewModels;
+
+@model IList<CandidateViewModel>
+
+@{
+    ViewData["Title"] = "Resultados Parciais da Eleição";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function ($) {
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        #election-content {
+            margin-top: 70px;
+        }
+    </style>
+}
+
+<div class="row main-content justify-content-center" id="election-content">
+    <div class="col-8">
+        <div class="ibox" id="election-container">
+            <table class="table table-hover" id="table-election">
+                <tbody class="rowlinkx" data-link="row">
+                    <tr style="background-color: #3498db; color: white">
+                        <td class="col-4"><strong>CANDIDATO</strong></td>
+                        <td class="col-4"><strong>VICE</strong></td>
+                        <td class="col-2" align="center"><strong>LEGENDA</strong></td>
+                        <td class="col-2" align="center"><strong>VOTOS</strong></td>
+                    </tr>
+                    @foreach (var candidate in Model)
+                    {
+                        <tr class="election-view">
+                            <td class="col-4"><strong><i class="fa fa-user"></i> @candidate.FullName</strong></td>
+                            <td class="col-4"><strong><i class="fa fa-user"></i> @candidate.ViceName</strong></td>
+                            <td class="col-2" align="center"><strong>@candidate.Ticket</strong></td>
+                            <td class="col-2" align="center"><strong>@candidate.VotesQty</strong></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

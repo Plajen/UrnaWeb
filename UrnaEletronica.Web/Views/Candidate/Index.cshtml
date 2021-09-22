@@ -1,0 +1,98 @@
+﻿@using System.Globalization;
+@using UrnaEletronica.Application.ViewModels;
+
+@model IList<CandidateViewModel>
+
+@{
+    ViewData["Title"] = "Candidatos";
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        function showModal() {
+            $('#new-candidate-modal').modal('show');
+        }
+
+        function resetForm($form) {
+            $form.find('input:text').val('');
+            $form.find('input').removeClass('input-validation-error');
+            $form.find('#FullName-error').remove();
+            $form.find('#ViceName-error').remove();
+            $form.find('#Ticket-error').remove();
+        }
+
+        $(document).ready(function ($) {
+            $('#Ticket').val('');
+
+            $('#new-candidate-modal').on('hidden.bs.modal', function () {
+                resetForm($('#form-candidate'));
+            });
+
+            $('.delete-candidate').on('click', function () {
+                $.ajax({
+                    url: '/Candidate/Delete',
+                    method: 'DELETE',
+                    data: { id: $(this).attr('data-id') },
+                    success: function () {
+                        location.href = '/Candidate/Index';
+                    }
+                });
+            });
+
+            $('#close-new-candidate-modal').on('click', function () {
+                $('#new-candidate-modal').modal('hide');
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        #candidate-content {
+            margin-top: 70px;
+        }
+        .fa-trash {
+            color: orangered;
+            cursor: pointer;
+            font-size: large;
+        }
+    </style>
+}
+
+<div class="row main-content justify-content-center" id="candidate-content">
+    <div class="col-lg-3 col-md-4">
+        <button type="button" class="btn btn-labeled btn-primary" onclick="showModal()">
+            <span class="btn-label" id="new-candidate-btn"><i class="fa fa-plus-circle"></i> Registrar Candidato</span>
+        </button>
+    </div>
+    <div class="col-lg-9 col-md-8">
+        <div class="ibox" id="candidate-container">
+            <table class="table table-hover" id="table-candidate">
+                <tbody class="rowlinkx" data-link="row">
+                    <tr style="background-color: #3498db; color: white">
+                        <td class="col-3"><strong>CANDIDATO</strong></td>
+                        <td class="col-3"><strong>VICE</strong></td>
+                        <td class="col-1" align="center"><strong>LEGENDA</strong></td>
+                        <td class="col-3" align="center"><strong>ADICIONADO</strong></td>
+                        <td class="col-2" align="center"><strong>AÇÕES</strong></td>
+                    </tr>
+                    @foreach (var candidate in Model)
+                    {
+                        <tr class="candidate-view">
+                            <td class="col-3"><strong>@candidate.FullName</strong></td>
+                            <td class="col-3"><strong>@candidate.ViceName</strong></td>
+                            <td class="col-1" align="center"><strong>@candidate.Ticket</strong></td>
+                            <td class="col-3" align="center"><strong>@candidate.Registered.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</strong></td>
+                            <td class="col-2" align="center"><i class="fa fa-trash delete-candidate" data-id="@candidate.Id"></i></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="new-candidate-modal" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        @{ await Html.RenderPartialAsync("_NewCandidatePartial", new CandidateViewModel()); }
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿@using UrnaEletronica.Web.Extensions
+@using UrnaEletronica.Web.Models
+@{
+    var alerts = TempData.ContainsKey(Alert.TempDataKey)
+                ? TempData.DeserializeAlerts(Alert.TempDataKey)
+                : new List<Alert>();
+
+    if (alerts.Any())
+    {
+        <hr class="alert-hr fade show" />
+    }
+
+    foreach (var alert in alerts)
+    {
+        var dismissableClass = alert.Dismissable ? "alert-dismissable" : "";
+        <div class="alert alert-@alert.AlertStyle @dismissableClass fade show has-icon">
+            <i class="@alert.AlertIcon alert-icon"></i>
+            <button type="button" class="close" data-dismiss="alert"></button>
+            @Html.Raw(alert.Message)
+        </div>
+    }
+}

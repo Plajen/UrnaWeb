@@ -1,0 +1,220 @@
+﻿@model UrnaEletronica.Application.ViewModels.VoteViewModel
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function ($) {
+            var isTypingNumbers = true;
+            var numbersTyped = [];
+            var candidateId;
+
+            function processDigitInput(number) {
+                $('#screen-text-initial').text('');
+                $('#screen-text-numbers').append('<span>' + number + '</span>');
+                numbersTyped.push(number);
+                if (numbersTyped.length == 2) {
+                    $.ajax({
+                        url: '/Vote/CheckTicket',
+                        method: 'GET',
+                        data: { ticket: $('#screen-text-numbers').text() },
+                        success: function (r) {
+                            $('#screen-text-numbers').text('');
+                            $('#screen-text-top').text('Nome: ' + r.data[0].fullName + ' (' + r.data[0].ticket + ')');
+                            $('#screen-text-bottom').text('Vice: ' + r.data[0].viceName);
+                            $('#screen-text-command').text('Tecle CONFIRMA ou CORRIGE.');
+                            candidateId = r.data[0].id;
+                            isTypingNumbers = false;
+                        },
+                        error: function () {
+                            $('#screen-text-numbers').text('');
+                            $('#screen-text-invalid').text('Número inválido. Voto nulo.');
+                            $('#screen-text-command').text('Tecle CONFIRMA ou CORRIGE.');
+                            candidateId = -1;
+                            isTypingNumbers = false;
+                        }
+                    });
+                }
+            }
+
+            $('#Number1').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(1);
+                }
+            });
+            $('#Number2').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(2);
+                }
+            });
+            $('#Number3').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(3);
+                }
+            });
+            $('#Number4').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(4);
+                }
+            });
+            $('#Number5').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(5);
+                }
+            });
+            $('#Number6').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(6);
+                }
+            });
+            $('#Number7').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(7);
+                }
+            });
+            $('#Number8').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(8);
+                }
+            });
+            $('#Number9').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(9);
+                }
+            });
+            $('#Number0').on('click', function () {
+                if (isTypingNumbers && numbersTyped.length < 2) {
+                    processDigitInput(0);
+                }
+            });
+
+            $('#Corrige').on('click', function () {
+                $('#screen-text-command').text('');
+                $('#screen-text-numbers').find('span').remove();
+                $('#screen-text-initial').text('Insira os 2 dígitos do seu candidato');
+                $('#screen-text-bottom').text('');
+                $('#screen-text-invalid').text('');
+                $('#screen-text-top').text('');
+                numbersTyped = [];
+                isTypingNumbers = true;
+            });
+
+            $('#Branco').on('click', function () {
+                if (isTypingNumbers) {
+                    $('#screen-text-initial').text('');
+                    $('#screen-text-numbers').text('');
+                    $('#screen-text-invalid').text('Voto em branco (não válido).');
+                    $('#screen-text-command').text('Tecle CONFIRMA ou CORRIGE.');
+                    candidateId = -1;
+                    numbersTyped = [];
+                    isTypingNumbers = false;
+                }
+            });
+
+            $('#Confirma').on('click', function () {
+                if (candidateId) {
+                    $('#screen-text-command').text('');
+                    $('#screen-text-numbers').find('span').remove();
+                    $('#screen-text-bottom').text('');
+                    $('#screen-text-invalid').text('');
+                    $('#screen-text-top').text('');
+                    numbersTyped = [];
+                    $('#screen-text-initial').text('Computando seu voto, aguarde...');
+                    $('#candidate-id').val(candidateId);
+                    $('#form-vote').submit();
+                }
+            });
+
+            $(document).on('submit', '#form-vote', function (event) {
+                var form = this;
+                event.preventDefault();
+                setTimeout(function () {
+                    form.submit();
+                }, 1500);
+            });
+        });
+    </script>
+}
+
+@section Styles {
+    <style>
+        #urna-image {
+            margin-top: 70px;
+        }
+        .container {
+            position: relative;
+            text-align: center;
+        }
+        #screen-text-top {
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            font-weight: bold;
+            font-size: larger;
+        }
+        #screen-text-numbers {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            font-weight: bold;
+            font-size: larger;
+        }
+        #screen-text-initial {
+            position: absolute;
+            top: 50%;
+            left: 27%;
+            font-weight: bold;
+            font-size: large;
+        }
+        #screen-text-command {
+            position: absolute;
+            top: 50%;
+            left: 29%;
+            font-weight: bold;
+            font-size: large;
+        }
+        #screen-text-bottom {
+            position: absolute;
+            top: 70%;
+            left: 32%;
+            font-weight: bold;
+            font-size: larger;
+        }
+        #screen-text-invalid {
+            position: absolute;
+            top: 70%;
+            left: 29%;
+            font-weight: bold;
+            font-size: larger;
+        }
+    </style>
+}
+
+@using (Html.BeginForm("New", "Vote", FormMethod.Post, new { id = "form-vote" }))
+{
+    <div class="container row justify-content-center" id="urna-image">
+        <img src="/images/urna.png" usemap="#urna-map">
+        <input type="hidden" name="CandidateId" id="candidate-id" value="" />
+        <div class="text-screen">
+            <p id="screen-text-top"></p>
+            <p id="screen-text-numbers"></p>
+            <p id="screen-text-command"></p>
+            <p id="screen-text-initial">Insira os 2 dígitos do seu candidato</p>
+            <p id="screen-text-bottom"></p>
+            <p id="screen-text-invalid"></p>
+        </div>
+        <map name="urna-map">
+            <area target="" alt="Number1" title="Number1" href="#" coords="480,148,439,120" id="Number1" shape="rect">
+            <area target="" alt="Number2" title="Number2" href="#" coords="490,117,527,148" id="Number2" shape="rect">
+            <area target="" alt="Number3" title="Number3" href="#" coords="537,116,575,149" id="Number3" shape="rect">
+            <area target="" alt="Number4" title="Number4" href="#" coords="441,153,482,183" id="Number4" shape="rect">
+            <area target="" alt="Number5" title="Number5" href="#" coords="492,151,532,183" id="Number5" shape="rect">
+            <area target="" alt="Number6" title="Number6" href="#" coords="540,152,579,182" id="Number6" shape="rect">
+            <area target="" alt="Number7" title="Number7" href="#" coords="445,186,485,217" id="Number7" shape="rect">
+            <area target="" alt="Number8" title="Number8" href="#" coords="494,186,536,217" id="Number8" shape="rect">
+            <area target="" alt="Number9" title="Number9" href="#" coords="543,186,583,218" id="Number9" shape="rect">
+            <area target="" alt="Number0" title="Number0" href="#" coords="496,222,539,254" id="Number0" shape="rect">
+            <area target="" alt="Branco" title="Branco" href="#" coords="439,258,490,294" id="Branco" shape="rect">
+            <area target="" alt="Corrige" title="Corrige" href="#" coords="494,260,546,294" id="Corrige" shape="rect">
+            <area target="" alt="Confirma" title="Confirma" href="#" coords="549,252,599,294" id="Confirma" shape="rect">
+        </map>
+    </div>
+}

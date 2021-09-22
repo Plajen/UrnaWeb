@@ -1,0 +1,15 @@
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\bin\Debug\netcoreapp3.1\UrnaEletronica.Application.deps.json
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\bin\Debug\netcoreapp3.1\UrnaEletronica.Application.dll
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\bin\Debug\netcoreapp3.1\UrnaEletronica.Application.pdb
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\bin\Debug\netcoreapp3.1\UrnaEletronica.Domain.Core.dll
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\bin\Debug\netcoreapp3.1\UrnaEletronica.Domain.dll
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\bin\Debug\netcoreapp3.1\UrnaEletronica.Domain.pdb
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\bin\Debug\netcoreapp3.1\UrnaEletronica.Domain.Core.pdb
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.csproj.AssemblyReference.cache
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.AssemblyInfoInputs.cache
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.AssemblyInfo.cs
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.csproj.CoreCompileInputs.cache
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.csproj.CopyComplete
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.dll
+C:\Users\jean_\source\repos\urna-eletronica\UrnaEletronica.Application\obj\Debug\netcoreapp3.1\UrnaEletronica.Application.pdb
